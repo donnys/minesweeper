@@ -1,2 +1,2 @@
-# minesweeper
-My Minesweeper
+# minesweeper-API
+My Minesweeper API
