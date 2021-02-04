@@ -3,15 +3,14 @@ package com.deviget.devtest.minesweeper.service;
 import com.deviget.devtest.minesweeper.dto.UserDto;
 import com.deviget.devtest.minesweeper.model.User;
 import com.deviget.devtest.minesweeper.repository.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
+@Service
 public class UserService {
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private UserRepository userRepository;
@@ -43,7 +42,7 @@ public class UserService {
                 .withName(updatedUser.getName())
                 .withUserName(updatedUser.getUserName())
                 .withPassword(updatedUser.getPassword())
-                .withGame(updatedUser.getGame());
+                .withGames(updatedUser.getGames());
 
         return new UserDto(userRepository.save(userToBeUpdated));
     }
@@ -54,8 +53,8 @@ public class UserService {
         if (updatedUser.getName() != null) {
             userToBeUpdated.setName(updatedUser.getName());
         }
-        if (updatedUser.getGame() != null) {
-            userToBeUpdated.setGame(updatedUser.getGame());
+        if (updatedUser.getGames() != null) {
+            userToBeUpdated.setGames(updatedUser.getGames());
         }
         return new UserDto(userRepository.save(userToBeUpdated));
     }

@@ -10,21 +10,20 @@ public class UserDto {
     private long id;
     private String name;
     private String userName;
+    private String password;
+    private List<GameDto> games;
 
     public UserDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.userName = user.getUserName();
         this.password = user.getPassword();
-        this.game = new GameDto(user.getGame());
+        this.games = GameDto.convert(user.getGames());
     }
 
     public static List<UserDto> convert(List<User> users) {
         return users.stream().map(user -> new UserDto(user)).collect(Collectors.toList());
     }
-
-    private String password;
-    private GameDto game;
 
     public long getId() {
         return id;
@@ -54,11 +53,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public GameDto getGame() {
-        return game;
+    public List<GameDto> getGames() {
+        return games;
     }
 
-    public void setGame(GameDto game) {
-        this.game = game;
+    public void setGames(List<GameDto> games) {
+        this.games = games;
     }
 }

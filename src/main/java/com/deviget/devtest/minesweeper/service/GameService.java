@@ -1,17 +1,19 @@
 package com.deviget.devtest.minesweeper.service;
 
 import com.deviget.devtest.minesweeper.dto.GameDto;
+import com.deviget.devtest.minesweeper.model.Cell;
+import com.deviget.devtest.minesweeper.model.FieldTable;
 import com.deviget.devtest.minesweeper.model.Game;
 import com.deviget.devtest.minesweeper.repository.GameRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
+@Service
 public class GameService {
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private GameRepository gameRepository;
@@ -25,6 +27,19 @@ public class GameService {
     }
 
     public GameDto createGame(Game game) {
+//        FieldTable fieldTable = game.getFieldTable();
+//        int height = fieldTable.getHeight();
+//        int width = fieldTable.getWidth();
+//        int numberOfMinesToBeDistributed = fieldTable.getNumberOfMines();
+//        List<Cell> cells = fieldTable.getCells();
+//
+//        for(int i = 0; i < height; i++) {
+//            for(int j = 0; j < width; j++) {
+//                cells.add(new Cell(i, j, ));
+//            }
+//        }
+
+
         return new GameDto(gameRepository.save(game));
     }
 

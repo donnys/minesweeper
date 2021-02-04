@@ -5,13 +5,13 @@ import com.deviget.devtest.minesweeper.model.FieldTable;
 import com.deviget.devtest.minesweeper.repository.FieldTableRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
+@Service
 public class FieldTableService {
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private FieldTableRepository fieldTableRepository;

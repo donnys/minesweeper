@@ -5,13 +5,13 @@ import com.deviget.devtest.minesweeper.model.Cell;
 import com.deviget.devtest.minesweeper.repository.CellRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
+@Service
 public class CellService {
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private CellRepository cellRepository;

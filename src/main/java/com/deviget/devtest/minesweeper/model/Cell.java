@@ -1,5 +1,6 @@
 package com.deviget.devtest.minesweeper.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,11 +13,28 @@ public class Cell {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column
     private int columnLocation;
+
+    @Column
     private int lineLocation;
+
+    @Column
     private int content;
+
+    @Column
     private int mark;
+
+    @Column
     private boolean revealed;
+
+    public Cell(int columnLocation, int lineLocation, int content) {
+        this.columnLocation = columnLocation;
+        this.lineLocation = lineLocation;
+        this.content = content;
+        this.mark = 0;
+        this.revealed = false;
+    }
 
     public long getId() {
         return id;

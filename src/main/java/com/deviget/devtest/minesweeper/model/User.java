@@ -1,9 +1,13 @@
 package com.deviget.devtest.minesweeper.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -12,10 +16,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String userName;
+
+    @Column(nullable = false)
     private String password;
-    private Game game;
+
+    @OneToMany
+    private List<Game> games = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -60,16 +71,16 @@ public class User {
         return this;
     }
 
-    public Game getGame() {
-        return game;
+    public List getGames() {
+        return games;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 
-    public User withGame(Game game) {
-        this.game = game;
+    public User withGames(List<Game> games) {
+        this.games = games;
         return this;
     }
 }
