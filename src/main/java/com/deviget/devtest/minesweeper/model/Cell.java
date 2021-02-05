@@ -28,12 +28,15 @@ public class Cell {
     @Column
     private boolean revealed;
 
-    public Cell(int columnLocation, int lineLocation, int content) {
+    public Cell(int columnLocation, int lineLocation) {
         this.columnLocation = columnLocation;
         this.lineLocation = lineLocation;
-        this.content = content;
+        this.content = 0;
         this.mark = 0;
         this.revealed = false;
+    }
+
+    public Cell() {
     }
 
     public long getId() {

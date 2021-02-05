@@ -26,8 +26,10 @@ public class FieldTableController {
     @Autowired
     private FieldTableService fieldTableService;
 
-    @PostMapping("/fieldTable")
+    @PostMapping("/user/{userId}/game/{gameId}/fieldTable")
     public ResponseEntity<FieldTableDto> createFieldTable(@RequestBody @Valid FieldTable fieldTable,
+                                                          @PathVariable long userId,
+                                                          @PathVariable long gameId,
                                                           UriComponentsBuilder uriBuilder) {
         FieldTableDto createdFieldTable = fieldTableService.createFieldTable(fieldTable);
 
@@ -35,24 +37,24 @@ public class FieldTableController {
         return ResponseEntity.created(uri).body(createdFieldTable);
     }
 
-    @PostMapping("/fieldTables")
-    public ResponseEntity<List<FieldTableDto>> createFieldTables(@RequestBody List<@Valid FieldTable> fieldTables) {
-        return ResponseEntity.created(null).body(fieldTableService.createFieldTables(fieldTables));
-    }
-
-    @GetMapping("/fieldTable/{fieldTableId}")
-    public ResponseEntity<FieldTableDto> getFieldTable(@PathVariable long fieldTableId) {
+    @GetMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}")
+    public ResponseEntity<FieldTableDto> getFieldTable(@PathVariable long userId,
+                                                       @PathVariable long gameId,
+                                                       @PathVariable long fieldTableId) {
         return ResponseEntity.ok(fieldTableService.getFieldTable(fieldTableId));
     }
 
-    @GetMapping("/fieldTable")
-    public ResponseEntity<List<FieldTableDto>> getFieldTables() {
+    @GetMapping("/user/{userId}/game/{gameId}/fieldTable")
+    public ResponseEntity<List<FieldTableDto>> getFieldTables(@PathVariable long userId,
+                                                              @PathVariable long gameId) {
         List<FieldTableDto> fieldTables = fieldTableService.getFieldTables();
         return ResponseEntity.ok(fieldTables);
     }
 
-    @PutMapping("/fieldTable/{fieldTableId}")
+    @PutMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}")
     public ResponseEntity<FieldTableDto> updateFieldTable(@RequestBody @Valid FieldTable updatedFieldTable,
+                                                          @PathVariable long userId,
+                                                          @PathVariable long gameId,
                                                           @PathVariable long fieldTableId) {
         try {
             return ResponseEntity.ok(fieldTableService.updateFieldTable(updatedFieldTable, fieldTableId));
@@ -61,8 +63,11 @@ public class FieldTableController {
         }
     }
 
-    @PatchMapping(path = "/fieldTable/{fieldTableId}", consumes = "application/merge-patch+json")
+    @PatchMapping(path = "/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}",
+            consumes = "application/merge-patch+json")
     public ResponseEntity<FieldTableDto> mergeUpdateFieldTable(@RequestBody FieldTable updatedFieldTable,
+                                                               @PathVariable long userId,
+                                                               @PathVariable long gameId,
                                                                @PathVariable long fieldTableId) {
         try {
             return ResponseEntity.ok(fieldTableService.mergeUpdateFieldTable(updatedFieldTable, fieldTableId));
@@ -71,8 +76,10 @@ public class FieldTableController {
         }
     }
 
-    @DeleteMapping("/fieldTable/{fieldTableId}")
-    public ResponseEntity<?> deleteFieldTable(@PathVariable long fieldTableId) {
+    @DeleteMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}")
+    public ResponseEntity<?> deleteFieldTable(@PathVariable long userId,
+                                              @PathVariable long gameId,
+                                              @PathVariable long fieldTableId) {
         fieldTableService.deleteFieldTable(fieldTableId);
         return ResponseEntity.noContent().build();
     }

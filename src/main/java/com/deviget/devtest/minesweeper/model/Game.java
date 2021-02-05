@@ -1,5 +1,6 @@
 package com.deviget.devtest.minesweeper.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,16 +16,16 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column
     private int status;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime startTime;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime lastUpdate;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private FieldTable fieldTable;
 
     public long getId() {

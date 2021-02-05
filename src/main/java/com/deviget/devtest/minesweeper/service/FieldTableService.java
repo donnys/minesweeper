@@ -1,9 +1,9 @@
 package com.deviget.devtest.minesweeper.service;
 
 import com.deviget.devtest.minesweeper.dto.FieldTableDto;
+import com.deviget.devtest.minesweeper.model.Cell;
 import com.deviget.devtest.minesweeper.model.FieldTable;
 import com.deviget.devtest.minesweeper.repository.FieldTableRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,9 @@ public class FieldTableService {
 
     @Autowired
     private FieldTableRepository fieldTableRepository;
+
+    @Autowired
+    private CellService cellService;
 
     public FieldTableDto getFieldTable(long fieldTableId) {
         return new FieldTableDto(fieldTableRepository.findById(fieldTableId).orElseThrow(NotFoundException::new));
@@ -51,10 +54,24 @@ public class FieldTableService {
     public FieldTableDto mergeUpdateFieldTable(FieldTable updatedFieldTable, long fieldTableId) {
         FieldTable fieldTableToBeUpdated = fieldTableRepository.findById(fieldTableId).orElseThrow(NotFoundException::new);
 
-        if (updatedFieldTable.getCells() != null) {
-            // TODO: It is probably better to use CellService given that there will be other changes to be performed
-            fieldTableToBeUpdated.setCells(updatedFieldTable.getCells());
+        List<Cell> cells = updatedFieldTable.getCells();
+        if (cells != null) {
+            cells.forEach(cell -> {
+                cellService.mergeUpdateCell(cell, fieldTableId, cell.getId());
+            });
         }
         return new FieldTableDto(fieldTableRepository.save(fieldTableToBeUpdated));
+    }
+
+    public FieldTable mergeUpdateFieldTable(FieldTable updatedFieldTable) {
+        FieldTable fieldTableToBeUpdated = fieldTableRepository.findById(updatedFieldTable.getId()).orElseThrow(NotFoundException::new);
+
+        List<Cell> cells = updatedFieldTable.getCells();
+        if (cells != null) {
+            cells.forEach(cell -> {
+                cellService.mergeUpdateCell(cell, updatedFieldTable.getId(), cell.getId());
+            });
+        }
+        return fieldTableRepository.save(fieldTableToBeUpdated);
     }
 }

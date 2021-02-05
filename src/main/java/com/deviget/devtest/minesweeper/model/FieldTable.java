@@ -1,11 +1,13 @@
 package com.deviget.devtest.minesweeper.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,8 +26,8 @@ public class FieldTable {
     @Column(nullable = false)
     private int numberOfMines;
 
-    @OneToMany
-    private List<Cell> cells;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Cell> cells = new ArrayList<>();
 
     public long getId() {
         return id;

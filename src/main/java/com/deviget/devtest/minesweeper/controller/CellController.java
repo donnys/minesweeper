@@ -26,8 +26,11 @@ public class CellController {
     @Autowired
     private CellService cellService;
 
-    @PostMapping("/cell")
+    @PostMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}/cell")
     public ResponseEntity<CellDto> createCell(@RequestBody @Valid Cell cell,
+                                              @PathVariable long userId,
+                                              @PathVariable long gameId,
+                                              @PathVariable long fieldTableId,
                                               UriComponentsBuilder uriBuilder) {
         CellDto createdCell = cellService.createCell(cell);
 
@@ -35,44 +38,54 @@ public class CellController {
         return ResponseEntity.created(uri).body(createdCell);
     }
 
-    @PostMapping("/cells")
-    public ResponseEntity<List<CellDto>> createCells(@RequestBody List<@Valid Cell> cells) {
-        return ResponseEntity.created(null).body(cellService.createCells(cells));
-    }
-
-    @GetMapping("/cell/{cellId}")
-    public ResponseEntity<CellDto> getCell(@PathVariable long cellId) {
+    @GetMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}/cell/{cellId}")
+    public ResponseEntity<CellDto> getCell(@PathVariable long userId,
+                                           @PathVariable long gameId,
+                                           @PathVariable long fieldTableId,
+                                           @PathVariable long cellId) {
         return ResponseEntity.ok(cellService.getCell(cellId));
     }
 
-    @GetMapping("/cell")
-    public ResponseEntity<List<CellDto>> getCells() {
+    @GetMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}/cell")
+    public ResponseEntity<List<CellDto>> getCells(@PathVariable long userId,
+                                                  @PathVariable long gameId,
+                                                  @PathVariable long fieldTableId) {
         List<CellDto> cells = cellService.getCells();
         return ResponseEntity.ok(cells);
     }
 
-    @PutMapping("/cell/{cellId}")
+    @PutMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}/cell/{cellId}")
     public ResponseEntity<CellDto> updateCell(@RequestBody @Valid Cell updatedCell,
+                                              @PathVariable long userId,
+                                              @PathVariable long gameId,
+                                              @PathVariable long fieldTableId,
                                               @PathVariable long cellId) {
         try {
-            return ResponseEntity.ok(cellService.updateCell(updatedCell, cellId));
+            return ResponseEntity.ok(cellService.updateCell(updatedCell, fieldTableId, cellId));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PatchMapping(path = "/cell/{cellId}", consumes = "application/merge-patch+json")
+    @PatchMapping(path = "/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}/cell/{cellId}",
+            consumes = "application/merge-patch+json")
     public ResponseEntity<CellDto> mergeUpdateCell(@RequestBody Cell updatedCell,
+                                                   @PathVariable long userId,
+                                                   @PathVariable long gameId,
+                                                   @PathVariable long fieldTableId,
                                                    @PathVariable long cellId) {
         try {
-            return ResponseEntity.ok(cellService.mergeUpdateCell(updatedCell, cellId));
+            return ResponseEntity.ok(cellService.mergeUpdateCell(updatedCell, fieldTableId, cellId));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/cell/{cellId}")
-    public ResponseEntity<?> deleteCell(@PathVariable long cellId) {
+    @DeleteMapping("/user/{userId}/game/{gameId}/fieldTable/{fieldTableId}/cell/{cellId}")
+    public ResponseEntity<?> deleteCell(@PathVariable long userId,
+                                        @PathVariable long gameId,
+                                        @PathVariable long fieldTableId,
+                                        @PathVariable long cellId) {
         cellService.deleteCell(cellId);
         return ResponseEntity.noContent().build();
     }
